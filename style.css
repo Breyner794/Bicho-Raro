@@ -1,0 +1,852 @@
+/* ─── FONTS ─────────────────────────────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&display=swap");
+
+/* ─── RESET & BASE ───────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --sky: #5bc8f5;
+  --grass-light: #74c442;
+  --grass-dark: #3a8c1e;
+  --ground: #8b5e3c;
+  --pixel-black: #1a1a1a;
+  --neon-pink: #ff2d9b;
+  --neon-yellow: #ffe600;
+  --neon-green: #39ff14;
+  --white: #ffffff;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: "Press Start 2P", monospace;
+  image-rendering: pixelated;
+  cursor: crosshair;
+}
+
+/* ─── SCREENS ─────────────────────────────────────────────── */
+.screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.4s ease;
+}
+.screen.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ─── PIXEL SKY BACKGROUND ───────────────────────────────── */
+.bg {
+  position: absolute;
+  inset: 0;
+  background: var(--sky);
+  z-index: 0;
+}
+
+/* Grass strip */
+.bg::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 28%;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--grass-light) 0px,
+    var(--grass-light) 8px,
+    var(--grass-dark) 8px,
+    var(--grass-dark) 16px
+  );
+  clip-path: polygon(
+    0% 30%,
+    1% 10%,
+    2% 30%,
+    3% 5%,
+    4% 28%,
+    5% 8%,
+    6% 32%,
+    7% 12%,
+    8% 30%,
+    9% 6%,
+    10% 28%,
+    11% 10%,
+    12% 32%,
+    13% 8%,
+    14% 28%,
+    15% 4%,
+    16% 26%,
+    17% 10%,
+    18% 30%,
+    19% 6%,
+    20% 28%,
+    21% 12%,
+    22% 32%,
+    23% 6%,
+    24% 28%,
+    25% 10%,
+    26% 30%,
+    27% 8%,
+    28% 28%,
+    29% 4%,
+    30% 26%,
+    31% 10%,
+    32% 30%,
+    33% 6%,
+    34% 28%,
+    35% 12%,
+    36% 32%,
+    37% 6%,
+    38% 28%,
+    39% 10%,
+    40% 30%,
+    41% 8%,
+    42% 28%,
+    43% 4%,
+    44% 26%,
+    45% 10%,
+    46% 30%,
+    47% 6%,
+    48% 28%,
+    49% 12%,
+    50% 32%,
+    51% 6%,
+    52% 28%,
+    53% 10%,
+    54% 30%,
+    55% 8%,
+    56% 28%,
+    57% 4%,
+    58% 26%,
+    59% 10%,
+    60% 30%,
+    61% 6%,
+    62% 28%,
+    63% 12%,
+    64% 32%,
+    65% 6%,
+    66% 28%,
+    67% 10%,
+    68% 30%,
+    69% 8%,
+    70% 28%,
+    71% 4%,
+    72% 26%,
+    73% 10%,
+    74% 30%,
+    75% 6%,
+    76% 28%,
+    77% 12%,
+    78% 32%,
+    79% 6%,
+    80% 28%,
+    81% 10%,
+    82% 30%,
+    83% 8%,
+    84% 28%,
+    85% 4%,
+    86% 26%,
+    87% 10%,
+    88% 30%,
+    89% 6%,
+    90% 28%,
+    91% 12%,
+    92% 32%,
+    93% 6%,
+    94% 28%,
+    95% 10%,
+    96% 30%,
+    97% 8%,
+    98% 28%,
+    99% 10%,
+    100% 30%,
+    100% 100%,
+    0% 100%
+  );
+}
+
+/* Ground dirt */
+.ground-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 7%;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--ground) 0,
+    var(--ground) 12px,
+    #7a5230 12px,
+    #7a5230 24px
+  );
+  z-index: 1;
+}
+
+/* ─── PIXEL TREE ──────────────────────────────────────────── */
+.tree {
+  position: absolute;
+  bottom: 7%;
+  z-index: 2;
+}
+.tree-trunk {
+  width: 18px;
+  height: 60px;
+  background: #7b2d0a;
+  margin: 0 auto;
+  image-rendering: pixelated;
+}
+.tree-top {
+  width: 80px;
+  height: 80px;
+  background: var(--grass-dark);
+  clip-path: polygon(
+    50% 0%,
+    100% 50%,
+    80% 50%,
+    100% 80%,
+    60% 80%,
+    60% 100%,
+    40% 100%,
+    40% 80%,
+    0% 80%,
+    20% 50%,
+    0% 50%
+  );
+  margin: 0 auto -30px;
+}
+.tree-1 {
+  left: 4%;
+  transform: scale(1.4);
+}
+.tree-2 {
+  left: 10%;
+  transform: scale(0.9);
+}
+.tree-3 {
+  right: 5%;
+  transform: scale(1.1);
+}
+
+/* ─── FLYING DUCKS ─────────────────────────────────────────── */
+.duck {
+  position: absolute;
+  font-size: 2rem;
+  z-index: 3;
+  filter: drop-shadow(2px 2px 0 #000);
+  animation: fly 8s linear infinite;
+}
+.duck-1 {
+  top: 8%;
+  animation-delay: 0s;
+}
+.duck-2 {
+  top: 20%;
+  animation-delay: -3s;
+}
+.duck-3 {
+  top: 14%;
+  animation-delay: -5s;
+  font-size: 1.4rem;
+}
+
+@keyframes fly {
+  0% {
+    left: -60px;
+    transform: scaleX(1);
+  }
+  49% {
+    left: 110%;
+    transform: scaleX(1);
+  }
+  50% {
+    left: 110%;
+    transform: scaleX(-1);
+  }
+  100% {
+    left: -60px;
+    transform: scaleX(-1);
+  }
+}
+
+/* ─── SCREEN 1: TITLE ────────────────────────────────────── */
+#screen-title {
+  z-index: 10;
+}
+
+.title-box {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 20px;
+}
+
+.title-nes {
+  font-family: "Press Start 2P", monospace;
+  font-size: clamp(10px, 2vw, 18px);
+  color: var(--neon-green);
+  letter-spacing: 4px;
+  text-shadow: 3px 3px 0 #006600;
+  margin-bottom: 6px;
+}
+
+.title-main {
+  font-family: "VT323", monospace;
+  font-size: clamp(60px, 12vw, 110px);
+  color: var(--neon-pink);
+  text-shadow:
+    4px 4px 0 #880055,
+    0 0 30px var(--neon-pink),
+    0 0 60px rgba(255, 45, 155, 0.4);
+  line-height: 1;
+  letter-spacing: 6px;
+  animation: titlePulse 2s ease-in-out infinite;
+}
+
+.title-sub {
+  font-family: "Press Start 2P", monospace;
+  font-size: clamp(7px, 1.5vw, 12px);
+  color: var(--neon-yellow);
+  text-shadow: 2px 2px 0 #886600;
+  letter-spacing: 2px;
+  margin-top: 8px;
+}
+
+@keyframes titlePulse {
+  0%,
+  100% {
+    text-shadow:
+      4px 4px 0 #880055,
+      0 0 20px var(--neon-pink);
+  }
+  50% {
+    text-shadow:
+      4px 4px 0 #880055,
+      0 0 50px var(--neon-pink),
+      0 0 80px rgba(255, 45, 155, 0.6);
+  }
+}
+
+.arrows-deco {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+.arrow-pixel {
+  font-size: 1.8rem;
+  color: var(--neon-green);
+  animation: arrowBounce 0.8s ease-in-out infinite alternate;
+  text-shadow: 2px 2px 0 #006600;
+}
+.arrow-pixel.left {
+  animation-delay: 0.4s;
+}
+@keyframes arrowBounce {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(6px);
+  }
+}
+.arrow-pixel.left {
+  animation-direction: alternate-reverse;
+}
+
+.press-start {
+  font-family: "Press Start 2P", monospace;
+  font-size: clamp(8px, 1.8vw, 14px);
+  color: var(--white);
+  text-shadow: 2px 2px 0 #444;
+  margin-top: 30px;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.btn-play {
+  margin-top: 18px;
+  padding: 14px 36px;
+  font-family: "Press Start 2P", monospace;
+  font-size: clamp(10px, 2vw, 16px);
+  color: var(--pixel-black);
+  background: var(--neon-yellow);
+  border: 4px solid var(--pixel-black);
+  box-shadow: 6px 6px 0 var(--pixel-black);
+  cursor: crosshair;
+  letter-spacing: 2px;
+  transition:
+    transform 0.1s,
+    box-shadow 0.1s;
+  text-transform: uppercase;
+}
+.btn-play:hover {
+  background: var(--neon-green);
+  transform: translate(2px, 2px);
+  box-shadow: 4px 4px 0 var(--pixel-black);
+}
+.btn-play:active {
+  transform: translate(6px, 6px);
+  box-shadow: 0 0 0 var(--pixel-black);
+}
+
+/* Score HUD decorative */
+.hud {
+  position: absolute;
+  top: 16px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 24px;
+  font-size: clamp(7px, 1.2vw, 11px);
+  color: var(--white);
+  text-shadow: 2px 2px 0 #000;
+  z-index: 10;
+}
+
+/* ─── SCREEN 2: CHARACTER SELECT ─────────────────────────── */
+#screen-select {
+  z-index: 10;
+  flex-direction: column;
+  gap: 0;
+}
+
+.select-header {
+  font-family: "Press Start 2P", monospace;
+  font-size: clamp(8px, 1.8vw, 14px);
+  color: var(--neon-yellow);
+  text-shadow: 3px 3px 0 #886600;
+  text-align: center;
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 10;
+  letter-spacing: 3px;
+}
+
+.select-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  z-index: 10;
+}
+
+.nav-btn {
+  background: var(--neon-green);
+  border: 4px solid var(--pixel-black);
+  box-shadow: 5px 5px 0 var(--pixel-black);
+  font-size: 1.8rem;
+  width: 54px;
+  height: 54px;
+  cursor: crosshair;
+  color: var(--pixel-black);
+  font-weight: 900;
+  transition:
+    transform 0.1s,
+    box-shadow 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.nav-btn:hover {
+  background: var(--neon-yellow);
+  transform: translate(2px, 2px);
+  box-shadow: 3px 3px 0 var(--pixel-black);
+}
+.nav-btn:active {
+  transform: translate(5px, 5px);
+  box-shadow: 0 0 0 var(--pixel-black);
+}
+
+.card {
+  width: clamp(260px, 35vw, 500px);
+  background: rgba(182, 19, 19, 0.559);
+  border: 5px solid var(--neon-pink);
+  box-shadow:
+    8px 8px 0 var(--pixel-black),
+    0 0 30px rgba(255, 45, 155, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 18px 16px;
+  position: relative;
+}
+
+/* pixel corner decorations */
+.card::before,
+.card::after {
+  content: "◆";
+  position: absolute;
+  font-size: 1.1rem;
+  color: var(--neon-green);
+}
+.card::before {
+  top: 8px;
+  left: 12px;
+}
+.card::after {
+  top: 8px;
+  right: 12px;
+}
+
+.char-counter {
+  font-family: "Press Start 2P", monospace;
+  font-size: 9px;
+  color: #aaa;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+}
+
+.char-img {
+  width: 320px;
+  height: 380px;
+  object-fit: cover;
+  object-position: top center;
+  border: 4px solid var(--neon-yellow);
+  box-shadow: 5px 5px 0 var(--pixel-black);
+  image-rendering: auto;
+  background: rgba(255, 255, 255, 0.355);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Contenedor necesita position relative */
+#char-img-wrap {
+  position: relative;
+  overflow: hidden;
+  cursor: crosshair;
+}
+
+/* El destello pixelado */
+#char-img-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      115deg,
+      transparent 30%,
+      rgba(241, 212, 42, 0.55) 50%,
+      transparent 70%
+    );
+  background-size:
+    200% 100%;
+  background-position:
+    0 0,-100% 0;
+  pointer-events: none;
+  transition: background-position 1s;
+}
+
+/* Al hover, el destello barre de izquierda a derecha */
+#char-img-wrap:hover::after {
+  background-position:
+    200% 0;
+  transition: background-position 0.5s ease;
+}
+
+#char-img-wrap {
+  perspective: 600px;
+  transition: transform 0.4s ease;
+}
+
+#char-img-wrap:hover {
+  transform: rotate(3deg);
+  transition: transform 0.4s ease;
+}
+
+/* placeholder pixel person */
+.char-placeholder {
+  width: 220px;
+  height: 280px;
+  border: 4px solid var(--neon-yellow);
+  box-shadow: 5px 5px 0 var(--pixel-black);
+  background: #222;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.char-placeholder .px-head {
+  width: 48px;
+  height: 48px;
+  background: var(--neon-yellow);
+  border: 3px solid #000;
+  border-radius: 4px;
+  position: relative;
+}
+.char-placeholder .px-body {
+  width: 36px;
+  height: 50px;
+  background: var(--neon-pink);
+  border: 3px solid #000;
+}
+.char-placeholder .px-emoji {
+  font-size: 2.5rem;
+}
+
+.char-name {
+  font-family: "Press Start 2P", monospace;
+  font-size: clamp(10px, 2vw, 15px);
+  color: var(--neon-pink);
+  text-shadow: 3px 3px 0 #880055;
+  margin: 12px 0 6px;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+.char-title {
+  font-family: "VT323", monospace;
+  font-size: 1.2rem;
+  color: var(--neon-green);
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+}
+
+/* STATS */
+.stats {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 16px;
+}
+.stat-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.stat-label {
+  font-family: "Press Start 2P", monospace;
+  font-size: 7px;
+  color: #ccc;
+  width: 60px;
+  flex-shrink: 0;
+}
+.stat-bar-bg {
+  flex: 1;
+  height: 12px;
+  background: #333;
+  border: 2px solid #555;
+}
+.stat-bar-fill {
+  height: 100%;
+  background: var(--neon-green);
+  transition: width 0.5s ease;
+  box-shadow: 0 0 6px var(--neon-green);
+}
+.stat-val {
+  font-family: "Press Start 2P", monospace;
+  font-size: 7px;
+  color: var(--neon-yellow);
+  width: 24px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.btn-select {
+  width: 100%;
+  padding: 12px;
+  font-family: "Press Start 2P", monospace;
+  font-size: clamp(8px, 1.4vw, 11px);
+  color: var(--pixel-black);
+  background: var(--neon-pink);
+  border: 4px solid var(--pixel-black);
+  box-shadow: 5px 5px 0 var(--pixel-black);
+  cursor: crosshair;
+  letter-spacing: 1px;
+  transition:
+    transform 0.1s,
+    box-shadow 0.1s;
+  text-transform: uppercase;
+}
+.btn-select:hover {
+  background: var(--neon-yellow);
+  transform: translate(2px, 2px);
+  box-shadow: 3px 3px 0 var(--pixel-black);
+}
+.btn-select:active {
+  transform: translate(5px, 5px);
+  box-shadow: 0 0 0 var(--pixel-black);
+}
+
+.btn-back {
+  position: absolute;
+  z-index: 12;
+  top: 14px;
+  left: 18px;
+  font-family: "Press Start 2P", monospace;
+  font-size: 8px;
+  color: var(--white);
+  background: transparent;
+  border: 2px solid var(--white);
+  padding: 6px 10px;
+  cursor: crosshair;
+  letter-spacing: 1px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.btn-back:hover {
+  opacity: 1;
+}
+
+/* ─── SCREEN 3: VIDEO ─────────────────────────────────────── */
+#screen-video {
+  background: #000;
+  z-index: 20;
+}
+
+.video-inner {
+  position: relative;
+  width: 90vw;
+  max-width: 960px;
+  z-index: 10;
+}
+
+.video-title-bar {
+  font-family: "Press Start 2P", monospace;
+  font-size: clamp(8px, 1.5vw, 12px);
+  color: var(--neon-green);
+  text-shadow: 2px 2px 0 #006600;
+  text-align: center;
+  margin-bottom: 12px;
+  letter-spacing: 2px;
+}
+
+.video-frame {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border: 5px solid var(--neon-pink);
+  box-shadow:
+    8px 8px 0 #000,
+    0 0 40px rgba(255, 45, 155, 0.4);
+}
+
+iframe.video-frame {
+  width: 100%;
+  aspect-ratio: 16/9;
+  height: auto;
+  display: block;
+}
+
+.video-placeholder {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #111;
+  border: 5px solid var(--neon-pink);
+  box-shadow: 8px 8px 0 #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.video-placeholder p {
+  font-family: "VT323", monospace;
+  font-size: 1.6rem;
+  color: #555;
+  text-align: center;
+  padding: 0 20px;
+}
+.video-placeholder .play-icon {
+  font-size: 5rem;
+  color: var(--neon-pink);
+  opacity: 0.6;
+  animation: titlePulse 2s ease-in-out infinite;
+}
+
+.btn-close-video {
+  margin-top: 16px;
+  padding: 12px 28px;
+  font-family: "Press Start 2P", monospace;
+  font-size: clamp(8px, 1.4vw, 11px);
+  color: var(--pixel-black);
+  background: var(--neon-green);
+  border: 4px solid var(--pixel-black);
+  box-shadow: 5px 5px 0 var(--pixel-black);
+  cursor: crosshair;
+  letter-spacing: 1px;
+  transition:
+    transform 0.1s,
+    box-shadow 0.1s;
+}
+.btn-close-video:hover {
+  background: var(--neon-yellow);
+  transform: translate(2px, 2px);
+  box-shadow: 3px 3px 0 var(--pixel-black);
+}
+
+/* ─── PIXEL CROSSHAIR CURSOR ──────────────────────────────── */
+.crosshair-cursor {
+  position: fixed;
+  width: 30px;
+  height: 30px;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.05s;
+}
+.crosshair-cursor::before,
+.crosshair-cursor::after {
+  content: "";
+  position: absolute;
+  background: rgba(255, 255, 255, 0.9);
+}
+.crosshair-cursor::before {
+  width: 2px;
+  height: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.crosshair-cursor::after {
+  height: 2px;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ─── SCORE DOTS ──────────────────────────────────────────── */
+.score-dots {
+  position: absolute;
+  bottom: 8%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  z-index: 4;
+}
+.score-dot {
+  width: 10px;
+  height: 10px;
+  background: #333;
+  border: 2px solid #000;
+}
+.score-dot.hit {
+  background: var(--neon-pink);
+  box-shadow: 0 0 6px var(--neon-pink);
+}

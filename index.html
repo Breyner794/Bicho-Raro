@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PICHO - Duck Hunt</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- PIXEL CROSSHAIR -->
+  <div class="crosshair-cursor" id="cursor"></div>
+
+  <!-- ══════════════════════════════════ SCREEN 1: TITLE ══ -->
+  <div class="screen" id="screen-title">
+    <div class="bg"></div>
+    <div class="ground-bar"></div>
+
+    <!-- Trees -->
+    <div class="tree tree-1"><div class="tree-top"></div><div class="tree-trunk"></div></div>
+    <div class="tree tree-2"><div class="tree-top"></div><div class="tree-trunk"></div></div>
+    <div class="tree tree-3"><div class="tree-top"></div><div class="tree-trunk"></div></div>
+
+    <!-- Ducks -->
+    <div class="duck duck-1">🦆</div>
+    <div class="duck duck-2">🦆</div>
+    <div class="duck duck-3">🦆</div>
+
+    <!-- HUD -->
+    <div class="hud">
+      <span>SCORE<br>00000</span>
+      <span>HI-SCORE<br>99999</span>
+      <span>ROUND<br>01</span>
+    </div>
+
+    <!-- Title -->
+    <div class="title-box">
+      <div class="title-nes">◄ NES CLASSIC ►</div>
+      <div class="arrows-deco">
+        <span class="arrow-pixel left">◄</span>
+        <div class="title-main">TITULO DEL BICHO RARO</div>
+        <span class="arrow-pixel">►</span>
+      </div>
+      <div class="title-sub">DUCK HUNT EDITION</div>
+      <div class="press-start">— SELECT YOUR HUNTER —</div>
+      <button class="btn-play" id="btn-play">▶ PLAY</button>
+    </div>
+
+    <!-- Ground dots -->
+    <div class="score-dots">
+      <div class="score-dot hit"></div>
+      <div class="score-dot hit"></div>
+      <div class="score-dot hit"></div>
+      <div class="score-dot"></div>
+      <div class="score-dot"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════ SCREEN 2: SELECT ══ -->
+  <div class="screen hidden" id="screen-select">
+    <div class="bg"></div>
+    <div class="ground-bar"></div>
+    <div class="tree tree-1"><div class="tree-top"></div><div class="tree-trunk"></div></div>
+    <div class="tree tree-3"><div class="tree-top"></div><div class="tree-trunk"></div></div>
+    <div class="duck duck-2">🦆</div>
+
+    <button class="btn-back" id="btn-back">◄ BACK</button>
+
+    <div class="select-header">SELECT YOUR HUNTER</div>
+
+    <div class="select-wrapper">
+      <button class="nav-btn" id="btn-prev">◄</button>
+
+      <div class="card" id="char-card">
+        <div class="char-counter" id="char-counter">1 / 5</div>
+
+        <!-- Character Image / Placeholder -->
+        <div id="char-img-wrap">
+          <!-- JS renders img or placeholder here -->
+        </div>
+
+        <div class="char-name" id="char-name">PICHO</div>
+        <div class="char-title" id="char-title">EL LIDER</div>
+
+        <div class="stats" id="char-stats">
+          <!-- JS renders stats here -->
+        </div>
+
+        <button class="btn-select" id="btn-select-char">
+          ► SELECCIONAR PERSONAJE ◄
+        </button>
+      </div>
+
+      <button class="nav-btn" id="btn-next">►</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════ SCREEN 3: VIDEO ══ -->
+  <div class="screen hidden" id="screen-video">
+    <div class="video-inner">
+      <div class="video-title-bar" id="video-title-bar">📼 PICHO — VIDEO</div>
+      <div id="video-container">
+        <!-- JS renders iframe or placeholder here -->
+      </div>
+      <div style="text-align:center; margin-top: 6px;">
+        <button class="btn-close-video" id="btn-close-video">✖ VOLVER AL MENU</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════ SCRIPT ══ -->
+<script src="script.js"></script>
+</body>
+</html>
