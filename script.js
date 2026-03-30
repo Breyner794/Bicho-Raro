@@ -1,3 +1,4 @@
+/* global jsnes */
     /* ─── CURSOR ─────────────────────────────────────────────── */
     const cursor = document.getElementById('cursor');
     document.addEventListener('mousemove', e => {
@@ -16,10 +17,10 @@
     ────────────────────────────────────────────────────────────── */
     const characters = [
       {
-        name: "PICHO",
-        title: "El Lider",
-        image: "img/590-removebg-preview.png", // 👈 pon la URL/path de la foto aquí
-        videoUrl: "video/Que.mp4",  // 👈 pon el link del video aquí
+        name: "Mickey Ak47",
+        title: "Mikyflow",
+        image: "img/Personaje_1.webp", // 👈 pon la URL/path de la foto aquí
+        videoUrl: "video/Personaje_1.mp4",  // 👈 pon el link del video aquí
         stats: {
           SWAG:    95,
           FLOW:    88,
@@ -29,10 +30,10 @@
         }
       },
       {
-        name: "HUNTER 2",
-        title: "El Socio",
-        image: "img/594-removebg-preview.png",
-        videoUrl: "video/km_20241228-Copiar_1080p_60f_20241229_110114.mp4",
+        name: "CSB",
+        title: "Four Players",
+        image: "img/Personaje_2.webp",
+        videoUrl: "video/Personaje_2.mp4",
         stats: {
           SWAG:    80,
           FLOW:    75,
@@ -42,10 +43,10 @@
         }
       },
       {
-        name: "HUNTER 3",
-        title: "El Silencioso",
-        image: "img/596-removebg-preview.png",
-        videoUrl: "video/km_20241228-Copiar_1080p_60f_20241229_122214.mp4",
+        name: "BICHO",
+        title: "Un Jugador",
+        image: "img/Personaje_3.webp",
+        videoUrl: "video/Personaje_3.mp4",
         stats: {
           SWAG:    70,
           FLOW:    95,
@@ -54,32 +55,32 @@
           NIVEL:   76,
         }
       },
-      {
-        name: "HUNTER 4",
-        title: "El Artista",
-        image: "img/WhatsApp Image 2026-03-21 at 11.05.24 (2).jpeg",
-        videoUrl: "video/km_20241228-Copiar_1080p_60f_20241229_122234.mp4",
-        stats: {
-          SWAG:    88,
-          FLOW:    65,
-          DRIP:    72,
-          VIBES:   91,
-          NIVEL:   80,
-        }
-      },
-      {
-        name: "HUNTER 5",
-        title: "El Novato",
-        image: "img/WhatsApp Image 2026-03-21 at 11.05.24.jpeg",
-        videoUrl: "video/km_20241228-Copiar_1080p_60f_20241229_122309.mp4",
-        stats: {
-          SWAG:    60,
-          FLOW:    70,
-          DRIP:    65,
-          VIBES:   72,
-          NIVEL:   66,
-        }
-      },
+      // {
+      //   name: "HUNTER 4",
+      //   title: "El Artista",
+      //   image: "img/WhatsApp Image 2026-03-21 at 11.05.24 (2).jpeg",
+      //   videoUrl: "video/km_20241228-Copiar_1080p_60f_20241229_122234.mp4",
+      //   stats: {
+      //     SWAG:    88,
+      //     FLOW:    65,
+      //     DRIP:    72,
+      //     VIBES:   91,
+      //     NIVEL:   80,
+      //   }
+      // },
+      // {
+      //   name: "HUNTER 5",
+      //   title: "El Novato",
+      //   image: "img/WhatsApp Image 2026-03-21 at 11.05.24.jpeg",
+      //   videoUrl: "video/km_20241228-Copiar_1080p_60f_20241229_122309.mp4",
+      //   stats: {
+      //     SWAG:    60,
+      //     FLOW:    70,
+      //     DRIP:    65,
+      //     VIBES:   72,
+      //     NIVEL:   66,
+      //   }
+      // },
     ];
 
     /* ─── STATE ──────────────────────────────────────────────── */
@@ -234,3 +235,157 @@
 
     /* ─── INIT ───────────────────────────────────────────────── */
     showScreen('title');
+
+    /* ─── EMULADOR JSNES ─────────────────────────────────────── */
+    const canvas = document.getElementById("nes-canvas");
+    const ctx = canvas.getContext("2d");
+    const imageData = ctx.createImageData(256, 240);
+    const buf = new Uint32Array(imageData.data.buffer);
+
+    let animationId = null;
+    let nes = null;
+
+    function createNes() {
+      return new jsnes.NES({
+        onFrame: function (buffer) {
+          for (var i = 0; i < 256 * 240; i++) {
+            buf[i] = 0xff000000 | buffer[i];
+          }
+          ctx.putImageData(imageData, 0, 0);
+        }
+      });
+    }
+
+    function loadROM() {
+        const container = document.getElementById("nes-container");
+
+        // 1. Detener cualquier proceso previo antes de empezar
+        if (animationId) {
+            cancelAnimationFrame(animationId);
+            animationId = null;
+        }
+
+        // 2. Reiniciar el emulador para evitar estados acumulados
+        nes = createNes();
+
+        fetch("roms/duck-hunt.nes")
+            .then((response) => response.arrayBuffer())
+            .then((data) => {
+                const romData = new Uint8Array(data);
+                let binary = "";
+                for (let i = 0; i < romData.length; i++) {
+                    binary += String.fromCharCode(romData[i]);
+                }
+
+                nes.loadROM(binary);
+
+                document.querySelector(".title-box").style.display = "none";
+                container.style.display = "flex";
+                container.style.flexDirection = "column";
+                btnExitGame.style.display = "block";
+
+                function step() {
+                    if (container.style.display !== "flex") {
+                        return;
+                    }
+                    nes.frame();
+                    animationId = requestAnimationFrame(step);
+                }
+                animationId = requestAnimationFrame(step);
+            })
+            .catch((error) => {
+                console.error("Error cargando ROM:", error);
+            });
+    }
+
+    // 3. Controles de teclado
+    const nesContainer = document.getElementById("nes-container");
+    const btnExitGame = document.getElementById("btn-exit-game");
+
+    /* ─── CONTROLES DE NES UNIFICADOS ────────────────────────── */
+
+    // 1. Definimos el mapa de teclas una sola vez fuera de los eventos
+    const keyMap = {
+      38: jsnes.Controller.BUTTON_UP,    // Flecha Arriba
+      40: jsnes.Controller.BUTTON_DOWN,  // Flecha Abajo
+      37: jsnes.Controller.BUTTON_LEFT,  // Flecha Izquierda
+      39: jsnes.Controller.BUTTON_RIGHT, // Flecha Derecha
+      13: jsnes.Controller.BUTTON_START, // Enter (START)
+      17: jsnes.Controller.BUTTON_SELECT,// Ctrl Izquierdo (SELECT)
+      90: jsnes.Controller.BUTTON_A,     // Z (BOTÓN A / DISPARAR)
+      88: jsnes.Controller.BUTTON_B      // X (BOTÓN B)
+    };
+
+    // 2. Evento KEYDOWN (Presionar)
+    document.addEventListener("keydown", (e) => {
+      // Solo actuamos si el contenedor del NES es visible
+      const isVisible = window.getComputedStyle(nesContainer).display !== "none";
+      if (!isVisible || !nes) return;
+
+      if (keyMap[e.keyCode] !== undefined) {
+        nes.buttonDown(1, keyMap[e.keyCode]);
+        e.preventDefault(); // Evita que la página haga scroll con las flechas
+      }
+    });
+
+    // 3. Evento KEYUP (Soltar)
+    document.addEventListener("keyup", (e) => {
+      const isVisible = window.getComputedStyle(nesContainer).display !== "none";
+      if (!isVisible || !nes) return;
+
+      if (keyMap[e.keyCode] !== undefined) {
+        nes.buttonUp(1, keyMap[e.keyCode]);
+        e.preventDefault();
+      }
+    });
+
+    /* ─── DISPARO CON MOUSE (ZAPPER SIMULATION) ──────────────── */
+    canvas.addEventListener("mousemove", (e) => {
+      const isVisible = window.getComputedStyle(nesContainer).display !== "none";
+      if (!isVisible || !nes) return;
+
+      const rect = canvas.getBoundingClientRect();
+      const x = Math.floor(((e.clientX - rect.left) / rect.width) * 256);
+      const y = Math.floor(((e.clientY - rect.top) / rect.height) * 240);
+      nes.zapperMove(x, y);
+    });
+
+    canvas.addEventListener("mousedown", (e) => {
+      const isVisible = window.getComputedStyle(nesContainer).display !== "none";
+      if (!isVisible || !nes) return;
+
+      const rect = canvas.getBoundingClientRect();
+      const x = Math.floor(((e.clientX - rect.left) / rect.width) * 256);
+      const y = Math.floor(((e.clientY - rect.top) / rect.height) * 240);
+      nes.zapperMove(x, y);
+      nes.zapperFireDown();
+      e.preventDefault();
+    });
+
+    canvas.addEventListener("mouseup", () => {
+      const isVisible = window.getComputedStyle(nesContainer).display !== "none";
+      if (!isVisible || !nes) return;
+      nes.zapperFireUp();
+    });
+
+    document.getElementById("btn-exit-game").addEventListener("click", () => {
+        if (animationId) {
+            cancelAnimationFrame(animationId);
+            animationId = null;
+        }
+
+        nes = null;
+        nesContainer.style.display = "none";
+        btnExitGame.style.display = "none";
+        document.querySelector(".title-box").style.display = "block";
+        document.querySelector(".hud").style.display = "flex";
+
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    });
+
+    document.getElementById("btn-open-classic").onclick = function(e) {
+        document.querySelector(".hud").style.display = "none";
+        e.preventDefault();
+        loadROM();
+    };

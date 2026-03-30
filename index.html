@@ -5,8 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>PICHO - Duck Hunt</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/jsnes/dist/jsnes.min.js"></script>
 </head>
 <body>
+  <video autoplay muted loop playsinline id="bg-video">
+  <source src="video/videoplayback.mp4" type="video/mp4">
+</video>
 
   <!-- PIXEL CROSSHAIR -->
   <div class="crosshair-cursor" id="cursor"></div>
@@ -17,14 +21,35 @@
     <div class="ground-bar"></div>
 
     <!-- Trees -->
-    <div class="tree tree-1"><div class="tree-top"></div><div class="tree-trunk"></div></div>
+    <!-- <div class="tree tree-1"><div class="tree-top"></div><div class="tree-trunk"></div></div>
     <div class="tree tree-2"><div class="tree-top"></div><div class="tree-trunk"></div></div>
-    <div class="tree tree-3"><div class="tree-top"></div><div class="tree-trunk"></div></div>
+    <div class="tree tree-3"><div class="tree-top"></div><div class="tree-trunk"></div></div> -->
 
     <!-- Ducks -->
-    <div class="duck duck-1">🦆</div>
+    <!-- <div class="duck duck-1">🦆</div>
     <div class="duck duck-2">🦆</div>
-    <div class="duck duck-3">🦆</div>
+    <div class="duck duck-3">🦆</div> -->
+
+    <!-- Emulador -->
+    <div id="nes-container">
+      <canvas id="nes-canvas" width="256" height="240"></canvas>
+      <div class="controls-info">
+        <div class="control-group">
+          <span class="control-label">NAVEGAR:</span>
+          <kbd>CTRL</kbd> o <kbd>SHIFT</kbd> <span class="action-text">(Mover Selector)</span>
+        </div>
+
+        <div class="control-group">
+          <span class="control-label">INICIAR:</span>
+          <kbd>ENTER</kbd> o <kbd>CLIC DER</kbd>
+        </div>
+
+        <div class="control-group highlighted">
+          <span class="control-label">JUGAR:</span>
+          <span class="mouse-icon">🖱️</span> <span class="action-text">CLIC IZQ para Disparar</span>
+        </div>
+      </div>
+    </div>
 
     <!-- HUD -->
     <div class="hud">
@@ -38,35 +63,41 @@
       <div class="title-nes">◄ NES CLASSIC ►</div>
       <div class="arrows-deco">
         <span class="arrow-pixel left">◄</span>
-        <div class="title-main">TITULO DEL BICHO RARO</div>
+        <div class="title-main">CAZANDO BICHOSSS</div>
         <span class="arrow-pixel">►</span>
       </div>
-      <div class="title-sub">DUCK HUNT EDITION</div>
-      <div class="press-start">— SELECT YOUR HUNTER —</div>
-      <button class="btn-play" id="btn-play">▶ PLAY</button>
+      <div class="title-sub">DUCK HUNT EDITION @bicharrooo_</div>
+      <div class="press-start">— SELECT YOUR BICHO —</div>
+      <div class="menu-buttons">
+        <button class="btn-play" id="btn-play">▶ PLAY</button>
+        <br>
+        <button id="btn-open-classic" class="btn-classic">🕹️ CLASSIC MODE</button>
+      </div>
     </div>
 
     <!-- Ground dots -->
-    <div class="score-dots">
+    <!-- <div class="score-dots">
       <div class="score-dot hit"></div>
       <div class="score-dot hit"></div>
       <div class="score-dot hit"></div>
       <div class="score-dot"></div>
       <div class="score-dot"></div>
-    </div>
+    </div> -->
   </div>
+
+  <button id="btn-exit-game" class="btn-back" style="display:none;">✖ EXIT GAME</button>
 
   <!-- ══════════════════════════════ SCREEN 2: SELECT ══ -->
   <div class="screen hidden" id="screen-select">
     <div class="bg"></div>
     <div class="ground-bar"></div>
-    <div class="tree tree-1"><div class="tree-top"></div><div class="tree-trunk"></div></div>
+    <!-- <div class="tree tree-1"><div class="tree-top"></div><div class="tree-trunk"></div></div>
     <div class="tree tree-3"><div class="tree-top"></div><div class="tree-trunk"></div></div>
-    <div class="duck duck-2">🦆</div>
+    <div class="duck duck-2">🦆</div> -->
 
     <button class="btn-back" id="btn-back">◄ BACK</button>
 
-    <div class="select-header">SELECT YOUR HUNTER</div>
+    <div class="select-header">SELECT YOUR BICHOOS</div>
 
     <div class="select-wrapper">
       <button class="nav-btn" id="btn-prev">◄</button>
@@ -98,7 +129,7 @@
   <!-- ══════════════════════════════ SCREEN 3: VIDEO ══ -->
   <div class="screen hidden" id="screen-video">
     <div class="video-inner">
-      <div class="video-title-bar" id="video-title-bar">📼 PICHO — VIDEO</div>
+      <div class="video-title-bar" id="video-title-bar">📼 BICHOS — VIDEOS</div>
       <div id="video-container">
         <!-- JS renders iframe or placeholder here -->
       </div>

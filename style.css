@@ -48,7 +48,18 @@ body {
 }
 
 /* ─── PIXEL SKY BACKGROUND ───────────────────────────────── */
-.bg {
+
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  z-index: -1;       
+}
+
+/* .bg {
   position: absolute;
   inset: 0;
   background: var(--sky);
@@ -56,7 +67,7 @@ body {
 }
 
 /* Grass strip */
-.bg::after {
+/* .bg::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -175,10 +186,10 @@ body {
     100% 100%,
     0% 100%
   );
-}
+} */ */
 
 /* Ground dirt */
-.ground-bar {
+/* .ground-bar {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -192,10 +203,10 @@ body {
     #7a5230 24px
   );
   z-index: 1;
-}
+} */
 
 /* ─── PIXEL TREE ──────────────────────────────────────────── */
-.tree {
+/* .tree {
   position: absolute;
   bottom: 7%;
   z-index: 2;
@@ -237,10 +248,10 @@ body {
 .tree-3 {
   right: 5%;
   transform: scale(1.1);
-}
+} */
 
 /* ─── FLYING DUCKS ─────────────────────────────────────────── */
-.duck {
+/* .duck {
   position: absolute;
   font-size: 2rem;
   z-index: 3;
@@ -278,7 +289,7 @@ body {
     left: -60px;
     transform: scaleX(-1);
   }
-}
+} */
 
 /* ─── SCREEN 1: TITLE ────────────────────────────────────── */
 #screen-title {
@@ -611,8 +622,8 @@ body {
 
 .char-name {
   font-family: "Press Start 2P", monospace;
-  font-size: clamp(10px, 2vw, 15px);
-  color: var(--neon-pink);
+  font-size: clamp(20px, 2vw, 20px);
+  color: #ffffff;
   text-shadow: 3px 3px 0 #880055;
   margin: 12px 0 6px;
   letter-spacing: 2px;
@@ -621,9 +632,9 @@ body {
 
 .char-title {
   font-family: "VT323", monospace;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   color: var(--neon-green);
-  letter-spacing: 1px;
+  letter-spacing: 3px;
   margin-bottom: 14px;
 }
 
@@ -830,7 +841,7 @@ iframe.video-frame {
 }
 
 /* ─── SCORE DOTS ──────────────────────────────────────────── */
-.score-dots {
+/* .score-dots {
   position: absolute;
   bottom: 8%;
   left: 0;
@@ -849,4 +860,109 @@ iframe.video-frame {
 .score-dot.hit {
   background: var(--neon-pink);
   box-shadow: 0 0 6px var(--neon-pink);
+} */
+
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px; /* Espacio entre botones */
+  margin-top: 20px;
+}
+
+.btn-classic {
+  display: inline-block;
+  background-color: #222; /* Fondo oscuro retro */
+  color: #00ff41; /* Verde tipo Matrix/Retro o puedes usar el rosa #ff0055 */
+  padding: 10px 20px;
+  text-decoration: none;
+  font-family: 'Press Start 2P', cursive; /* Asegúrate de tener esta fuente o una similar */
+  font-size: 12px;
+  border: 3px solid #fff;
+  box-shadow: 4px 4px 0px #555;
+  image-rendering: pixelated;
+  transition: all 0.2s ease;
+}
+
+.btn-classic:hover {
+  background-color: #fff;
+  color: #000;
+  transform: scale(1.1);
+  box-shadow: 6px 6px 0px #00ff41;
+}
+
+#nes-container {
+  display: none; /* Se mantiene oculto hasta que cargue la ROM */
+  position: relative;
+  z-index: 100;
+  margin: 0 auto;
+}
+
+#nes-canvas {
+    width: 90vw;  /* Ocupa casi todo el ancho */
+    height: 70vh; /* Mantiene espacio para los controles abajo */
+    object-fit: fill; /* Fuerza el estiramiento */
+    image-rendering: pixelated;
+}
+
+#nes-container .controls-info {
+  margin-top: 10px;
+  text-align: center;
+  align-items: center;
+}
+
+.controls-info {
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid var(--neon-green);
+  padding: 15px;
+  border-radius: 8px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 15px;
+  text-align: left;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.control-label {
+  color: var(--neon-yellow);
+  min-width: 100px;
+}
+
+.action-text {
+  font-size: 8px;
+  color: #aaa;
+}
+
+/* Estilo para las teclas */
+kbd {
+  background-color: #eee;
+  border-radius: 3px;
+  border: 1px solid #b4b4b4;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.2), 0 0 0 2px #fff inset;
+  color: #333;
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 4px 6px;
+  white-space: nowrap;
+}
+
+.highlighted {
+  border-top: 1px dashed #555;
+  padding-top: 10px;
+  color: var(--neon-pink);
+}
+
+.mouse-icon {
+  font-size: 16px;
 }
