@@ -19,8 +19,8 @@
       {
         name: "Mickey Ak47",
         title: "Mikyflow",
-        image: "img/Personaje_1.webp", // 👈 pon la URL/path de la foto aquí
-        videoUrl: "video/Personaje_1.mp4",  // 👈 pon el link del video aquí
+        image: "https://res.cloudinary.com/dibpc6jxc/image/upload/v1775052252/Personaje_1_i45h0h.webp", // 👈 pon la URL/path de la foto aquí
+        videoUrl: "https://res.cloudinary.com/dibpc6jxc/video/upload/v1775052278/Personaje_1_hwm9lw.mp4",  // 👈 pon el link del video aquí
         stats: {
           SWAG:    95,
           FLOW:    88,
@@ -281,7 +281,7 @@
 
                 document.querySelector(".title-box").style.display = "none";
                 container.style.display = "flex";
-                container.style.flexDirection = "column";
+                container.style.flexDirection = "column ";
                 btnExitGame.style.display = "block";
 
                 function step() {
