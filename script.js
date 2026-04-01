@@ -32,8 +32,8 @@
       {
         name: "CSB",
         title: "Four Players",
-        image: "img/Personaje_2.webp",
-        videoUrl: "video/Personaje_2.mp4",
+        image: "https://res.cloudinary.com/dibpc6jxc/image/upload/v1775052253/Personaje_2_ndxiab.webp",
+        videoUrl: "https://res.cloudinary.com/dibpc6jxc/video/upload/v1775052287/Personaje_2_pgh98d.mp4",
         stats: {
           SWAG:    80,
           FLOW:    75,
@@ -45,8 +45,8 @@
       {
         name: "BICHO",
         title: "Un Jugador",
-        image: "img/Personaje_3.webp",
-        videoUrl: "video/Personaje_3.mp4",
+        image: "https://res.cloudinary.com/dibpc6jxc/image/upload/v1775052252/Personaje_3_izuisj.webp",
+        videoUrl: "https://res.cloudinary.com/dibpc6jxc/video/upload/v1775052285/Personaje_3_wa2unm.mp4",
         stats: {
           SWAG:    70,
           FLOW:    95,
